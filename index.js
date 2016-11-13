@@ -41,6 +41,6 @@ io.on('connection', function(s){
 //   io.emit('beat', currentBeat);
 // });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(process.env.PORT, function(){
+  console.log('listening on *:'+process.env.PORT);
 });
