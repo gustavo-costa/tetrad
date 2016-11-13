@@ -7,6 +7,8 @@
         background-color: lightpink;
         color:black;
         transition:background-color 0.5s;
+        max-height: 100vh;
+        overflow: hidden;
       }
       header h1{
         color:white;
@@ -30,14 +32,12 @@
       .pulse {
         background-color: white;
       }
-      #siri-container,#svgIcon{
-        width: 100%; height: auto;
-        margin: auto;
-      }
-
     </style>
   </head>
-  <body>
+  <body class="ripple">
+    <div id="siri-container">
+
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./public/jquery-3.1.1.min.js"></script>
     <script src="./public/tone.js"></script>
@@ -74,10 +74,22 @@
           });
           socket.on('pulse',function(){
             //console.log("pulse received!");
-            //$('body').toggleClass('pulse');
+            //$('body').toggleClass('rippleafter');
           });
           var notes = (function(){
-            i = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+            if( navigator.userAgent.match(/Android/i)
+            || navigator.userAgent.match(/webOS/i)
+            || navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/iPad/i)
+            || navigator.userAgent.match(/iPod/i)
+            || navigator.userAgent.match(/BlackBerry/i)
+            || navigator.userAgent.match(/Windows Phone/i)
+            ){
+               i = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+             } else {
+               i = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+             }
+
             if(i===1){
               return ["C4","E4","G4","A4","F4"];
             } else if(i===2){
@@ -91,31 +103,6 @@
                 plucky.triggerAttackRelease(note, "@8n");
             }, notes.scramble(),"upDown");
             patternOne.start(0);
-
-            // var siriWave = new SiriWave({
-            // container: document.getElementById('siri-container'),
-            // width: 1000,
-            // height: 1000,
-            // style: 'ios9',
-            // cover:true,
-            // speed: 0.01,
-            // frequency: 200
-            // });
-            function desktopWave() {
-             if( navigator.userAgent.match(/Android/i)
-             || navigator.userAgent.match(/webOS/i)
-             || navigator.userAgent.match(/iPhone/i)
-             || navigator.userAgent.match(/iPad/i)
-             || navigator.userAgent.match(/iPod/i)
-             || navigator.userAgent.match(/BlackBerry/i)
-             || navigator.userAgent.match(/Windows Phone/i)
-             ){
-                return true;
-              }
-             else {
-              //siriWave.start();
-              }
-            }
     </script>
   </body>
 </html>
