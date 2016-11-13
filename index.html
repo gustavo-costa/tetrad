@@ -35,9 +35,6 @@
     </style>
   </head>
   <body class="ripple">
-    <div id="siri-container">
-
-    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./public/jquery-3.1.1.min.js"></script>
     <script src="./public/tone.js"></script>
@@ -61,7 +58,6 @@
           socket.on('sync', function(currentBeat){
             if(Tone.Transport.state === "stopped"){
               Tone.Transport.start('+0.1');
-              desktopWave();
             } else {
               Tone.Transport.syncSignal;
               //console.log('sync');
