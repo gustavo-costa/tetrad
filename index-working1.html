@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket Test</title>
+    <style>
+      body{
+        background-color: lightpink;
+        color:black;
+        transition:background-color 0.5s;
+      }
+      header h1{
+        color:white;
+        font-size: 5em;
+        margin: 0 auto;
+        text-align: center;
+        min-width: 20%;
+        max-width: 80%;
+        min-height: 20%;
+      }
+      #container, img{
+        color:slategrey;
+        font-size: 10em;
+        margin: 0 auto;
+        min-width: 20%;
+        max-width: 50%;
+        min-height: 20%;
+        background: white;
+        text-align: center;
+      }
+      .pulse {
+        background-color: white;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Socket Test</h1>
+    </header>
+
+    <ul>
+      <div id="eventdiv"></div>
+      <div id="container"></div>
+    </ul>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="./public/timbre.js"></script>
+    <script src="./public/subcollidor.js"></script>
+    <script>
+        var socket = io();
+        var isPlaying = false;
+        var song;
+
+        $( document ).ready(function() {
+            console.log( "ready!" );
+            socket.emit('connection');
+            socket.emit('beat');
+            (function(){
+              i = Math.floor(Math.random() * (3 - 0 + 1)) + 0;
+            }());
+        });
+          socket.on('beat', function(currentBeat){
+             document.querySelector('#container').innerHTML = "<h4>"+currentBeat+"</h4>";
+
+
+
+        });
+
+        document.querySelector('*').addEventListener('click', function(){
+          if(isPlaying){
+            song.pause();
+            isPlaying = false;
+          }
+          socket.on('sync', function(currentBeat){
+            //console.log("Beat One!");
+            arpeggio();
+          });
+          socket.on('pulse',function(){
+            //console.log("pulse received!");
+            //$('body').toggleClass('pulse');
+          });
+
+        });
+
+
+      function arpeggio() {
+
+        if(!isPlaying){
+
+        timbre.rec(function(output) {
+        var midis = [
+          [72, 72, 72, 64].scramble(),
+          [79, 81, 83, 76].scramble(),
+          [69, 71, 72, 76, 69, 71, 72, 76].scramble(),
+          [50, 52, 55, 59, 50, 60, 52, 59].scramble() ];
+
+        var msec  = timbre.timevalue("bpm120 l8");
+        var synth = T("OscGen", {env:T("perc", {r:msec, ar:true,mul:1.3})});
+
+        T("interval", {interval:msec}, function(count) {
+          if (count < midis.length) {
+            synth.noteOn(midis[i][count], 100);
+          } else {
+            output.done();
+          }
+        }).start();
+        output.send(synth);
+        }).then(function(result) {
+        var L = T("buffer", {buffer:result, loop:true});
+        var R = T("buffer", {buffer:result, loop:true});
+
+        var num = 400;
+        var duration = L.duration;
+
+        R.pitch = (duration * (num - 1)) / (duration * num);
+
+        // var song = T("delay", {time:"bpm120 l16", fb:0, cross:true},
+        //   T("pan", {pos:-0.6}, L), T("pan", {pos:+0.6}, R)
+        // );
+        song = T("reverb", {room:5, damp:0.2, mix:0.45},
+          T("pan", {pos:-0.6}, L), T("pan", {pos:+0.6}, R)
+        );
+        song.play();
+        isPlaying=true;
+        console.log("started playing!");
+
+
+    });
+
+
+    }
+    }
+
+    </script>
+  </body>
+</html>

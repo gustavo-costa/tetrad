@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Tetrad</title>
+    <style>
+      body{
+        background-color: lightpink;
+        color:black;
+        transition:background-color 0.5s;
+      }
+      header h1{
+        color:white;
+        font-size: 5em;
+        margin: 0 auto;
+        text-align: center;
+        min-width: 20%;
+        max-width: 80%;
+        min-height: 20%;
+      }
+      #container, img{
+        color:slategrey;
+        font-size: 10em;
+        margin: 0 auto;
+        min-width: 20%;
+        max-width: 50%;
+        min-height: 20%;
+        background: white;
+        text-align: center;
+      }
+      .pulse {
+        background-color: white;
+      }
+      #siri-container,#svgIcon{
+        width: 100%; height: auto;
+        margin: auto;
+      }
+
+    </style>
+  </head>
+  <body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="./public/tone.js"></script>
+    <script src="./public/subcollidor.js"></script>
+    <script src="./public/randomColor.js"></script>
+    <script>
+        var socket = io();
+        var isPlaying = false;
+        var i;
+        $(document).ready(function() {
+          console.log("ready");
+            socket.emit('connection');
+            socket.emit('beat');
+
+            $('body').css('background-color',
+            randomColor({
+               luminosity: 'bright',
+               format: 'rgb'
+            }));
+        });
+          socket.on('sync', function(currentBeat){
+            if(Tone.Transport.state === "stopped"){
+              Tone.Transport.start('+0.1');
+              desktopWave();
+            } else {
+              Tone.Transport.syncSignal;
+              //console.log('sync');
+            }
+            $('body').css('background-color',
+            randomColor({
+               luminosity: 'bright',
+               format: 'rgb'
+            }));
+          });
+          socket.on('pulse',function(){
+            //console.log("pulse received!");
+            //$('body').toggleClass('pulse');
+          });
+          var notes = (function(){
+            i = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+            if(i===1){
+              return ["C4","E4","G4","A4","F4"];
+            } else if(i===2){
+              return ["E4","F4","E4","F3","C4"];
+            } else{
+              return ["C3","E3","G3","A3","F3"];
+            }
+          })();
+            var plucky = new Tone.PolySynth().toMaster();
+            var patternOne = new Tone.Pattern(function(time, note){
+                plucky.triggerAttackRelease(note, "@8n");
+            }, notes.scramble(),"upDown");
+            patternOne.start(0);
+
+            // var siriWave = new SiriWave({
+            // container: document.getElementById('siri-container'),
+            // width: 1000,
+            // height: 1000,
+            // style: 'ios9',
+            // cover:true,
+            // speed: 0.01,
+            // frequency: 200
+            // });
+            function desktopWave() {
+             if( navigator.userAgent.match(/Android/i)
+             || navigator.userAgent.match(/webOS/i)
+             || navigator.userAgent.match(/iPhone/i)
+             || navigator.userAgent.match(/iPad/i)
+             || navigator.userAgent.match(/iPod/i)
+             || navigator.userAgent.match(/BlackBerry/i)
+             || navigator.userAgent.match(/Windows Phone/i)
+             ){
+                return true;
+              }
+             else {
+              //siriWave.start();
+              }
+            }
+    </script>
+  </body>
+</html>

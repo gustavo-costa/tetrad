@@ -1,0 +1,14 @@
+{
+  "name": "tetrad",
+  "version": "0.0.1",
+  "description": "Make music together.",
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.5.1",
+  },"engines": {
+    "node": ">= 6.9.1"
+},  "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+  }
+}
