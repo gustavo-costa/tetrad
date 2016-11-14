@@ -42,7 +42,8 @@
       @import url(https://fonts.googleapis.com/css?family=Fjalla+One);
       @font-face {
         font-family: 'viper';
-        src: url('./public/viper.ttf');
+        src: url('./public/viper.ttf') format('woff'),
+        src: url('./public/viper.woff') format('truetype');
       }
     body {
       font-family: 'viper', sans-serif;
@@ -205,7 +206,7 @@
                 }));
               });
           });
-          
+
           function animation() {
             var title1 = new TimelineMax();
             title1.to(".button", 0, {visibility: 'hidden', opacity: 0})
