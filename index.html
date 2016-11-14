@@ -2,21 +2,20 @@
 <html>
   <head>
     <title>Tetrad</title>
+    <link rel="icon" type="image/png" href="./favicon.png" />
     <style>
       body{
         background-color: lightpink;
         transition:background-color 0.5s;
-        max-width: 200px;
+
         margin: auto;
       }
       img{
-        height:500px;
-        max-height: 500px;
+        padding-top: 10vh;
+        height:80vh;
+        max-width: 80vw;
         margin: 0 auto;
         display: block;
-      }
-      div{
-        width:200px;
       }
     </style>
   </head>
@@ -40,8 +39,8 @@
 
             $('body').css('background-color',
             randomColor({
-               luminosity: 'bright',
-               format: 'rgb'
+              luminosity: 'light',
+              format: 'rgb'
             }));
         });
           socket.on('sync', function(currentBeat){
@@ -53,8 +52,8 @@
             }
             $('body').css('background-color',
             randomColor({
-               luminosity: 'bright',
-               format: 'rgb'
+              luminosity: 'light',
+              format: 'rgb'
             }));
           });
           socket.on('pulse',function(){
