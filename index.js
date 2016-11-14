@@ -1,4 +1,3 @@
-//var app = require('express')();
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -24,12 +23,9 @@ var i;
     }
     io.emit('beat',currentBeat);
   },500));
-
-
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
-
 io.on('connection', function(s){
     console.log('a user connected');
     io.emit('beat',currentBeat);
@@ -37,8 +33,7 @@ io.on('connection', function(s){
       console.log('user disconnected');
     });
 });
-//var port = 3000;
-var port = process.env.PORT;
+var port = process.env.PORT || 3000;
 http.listen(port, function(){
   console.log('listening on *: '+port);
 });

@@ -91,7 +91,27 @@
     .title:nth-child(3) {
       color: #f1c83c;
     }
-
+    .button {
+        float: left;
+        font-size: 28px;
+        font-family: 'viper', sans-serif;
+        position: relative;
+        bottom: -65px;
+        left: 50%;
+        transform: translateX(-50%) rotate(0deg);
+        color: #f1c83c;
+        text-transform: uppercase;
+        text-align: center;
+        opacity: 0;
+        visibility: hidden;
+        cursor: pointer;
+        text-shadow: #533d4a 1px 1px, #533d4a 2px 2px, #533d4a 3px 3px, #533d4a 4px 4px;
+      }
+      .button span {
+        transform: skew(-10deg);
+        display: block;
+        float: left;
+      }
     </style>
   </head>
   <body>
@@ -104,6 +124,7 @@
         <span class="title">Music</span>
         <span class="title">Together</span>
       </h1>
+    <div class="button">begin</div>
     </section>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./public/jquery-3.1.1.min.js"></script>
@@ -122,27 +143,14 @@
             socket.emit('connection');
             socket.emit('beat');
             $(".title").lettering();
+            $(".button").lettering();
             $('body').css('background-color',
             randomColor({
               luminosity: 'bright',
               format: 'rgb'
             }));
         });
-        socket.on('sync', function(currentBeat){
-          $("img").addClass("fade-in");
-          $(".container").addClass("fade-out");
-          if(Tone.Transport.state === "stopped"){
-            Tone.Transport.start('+0.1');
-          } else {
-            Tone.Transport.syncSignal;
-            //console.log('sync');
-          }
-          $('body').css('background-color',
-            randomColor({
-              luminosity: 'bright',
-              format: 'rgb'
-            }));
-          });
+
           socket.on('pulse',function(){
             //console.log('pulse');
           });
@@ -175,19 +183,36 @@
           }, notes,"upDown");
           patternOne.start(0);
 
-
-
-          //////////////////////////
           $(document).ready(function() {
             animation();
           }, 1000);
+
+          $('.button').click(function() {
+            $('.button').text("Waiting for my moment...");
+            socket.on('sync', function(currentBeat){
+              $("img").addClass("fade-in");
+              $(".container").addClass("fade-out");
+              if(Tone.Transport.state === "stopped"){
+                Tone.Transport.start('+0.1');
+              } else {
+                Tone.Transport.syncSignal;
+                //console.log('sync');
+              }
+              $('body').css('background-color',
+                randomColor({
+                  luminosity: 'bright',
+                  format: 'rgb'
+                }));
+              });
+          });
+          
           function animation() {
             var title1 = new TimelineMax();
             title1.to(".button", 0, {visibility: 'hidden', opacity: 0})
             title1.staggerFromTo(".title span", 0.5,
-            {ease: Back.easeOut.config(1.7), opacity: 0, bottom: -80},
-            {ease: Back.easeOut.config(1.7), opacity: 1, bottom: 0}, 0.05);
-            title1.to(".button", 0.2, {visibility: 'visible' ,opacity: 1})
+            {ease: Back.easeOut.config(3), opacity: 0, bottom: -80},
+            {ease: Back.easeOut.config(3), opacity: 1, bottom: 0}, 0.05);
+            title1.to(".button", 1, {visibility: 'visible' ,opacity: 1})
           }
     </script>
   </body>
