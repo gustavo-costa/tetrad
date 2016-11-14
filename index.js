@@ -40,8 +40,8 @@ io.on('connection', function(s){
 // io.on('beat', function(){
 //   io.emit('beat', currentBeat);
 // });
-var port = 3000;
-//var port = process.env.PORT;
+//var port = 3000;
+var port = process.env.PORT;
 http.listen(port, function(){
   console.log('listening on *: '+port);
 });
