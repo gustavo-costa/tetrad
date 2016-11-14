@@ -71,29 +71,22 @@
             ){
                i = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
              } else {
-               i = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+               i = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
              }
 
             if(i===1){
-              return ["C4","E4","G4","A4","F4"];
+              return ["C4","E4","G4","A4","F4"].scramble();
             } else if(i===2){
-              return ["E4","F4","E4","F3","C4"];
-            } else{
-              return ["C3","E3","G3","A3","F3"];
+              return ["E4","F4","E4","F3","C4"].scramble();
+            } else if(i===3){
+              return ["C3","E3","G3","A3","F3"].scramble();
             }
           })();
             var plucky = new Tone.PolySynth().toMaster();
             var patternOne = new Tone.Pattern(function(time, note){
                 plucky.triggerAttackRelease(note, "@8n");
-            }, notes.scramble(),"upDown");
+            }, notes,"upDown");
             patternOne.start(0);
-            var drum = new Tone.MembraneSynth().toMaster();
-            var drumPattern = new Tone.Pattern(function(time, note){
-                drum.triggerAttackRelease(note, "@8n");
-            }, ["C3","C3","C3","C3","C3"],"upDown");
-            drumPattern.start(0);
-
-
     </script>
   </body>
 </html>
