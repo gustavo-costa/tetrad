@@ -37,9 +37,6 @@ io.on('connection', function(s){
       console.log('user disconnected');
     });
 });
-// io.on('beat', function(){
-//   io.emit('beat', currentBeat);
-// });
 //var port = 3000;
 var port = process.env.PORT;
 http.listen(port, function(){
