@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 
 app.use('/', express.static(__dirname + '/'));
 app.use('/', express.static(__dirname + '/public'));
+app.use('/', express.static(__dirname + '/.fonts'));
 var beatArray = [1,2,3,4,5,6,7,8];
 var currentBeat = 0;
 var i;
