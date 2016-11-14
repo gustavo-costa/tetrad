@@ -58,6 +58,7 @@
       display: block;
       position: absolute;
       max-width: 250px;
+      min-width: 250px;
     }
     h1 {
       color: #2b9f5e;
@@ -74,6 +75,7 @@
       float: left;
       left: 50%;
       position: relative;
+      opacity:0;
     }
     .title span {
       transform: skew(-10deg);
@@ -115,6 +117,7 @@
         display: block;
         float: left;
       }
+
     </style>
   </head>
   <body>
@@ -211,6 +214,7 @@
 
           function animation() {
             var title1 = new TimelineMax();
+            $('.title').css('opacity',1);
             title1.to(".button", 0, {visibility: 'hidden', opacity: 0})
             title1.staggerFromTo(".title span", 0.5,
             {ease: Back.easeOut.config(3), opacity: 0, bottom: -80},
