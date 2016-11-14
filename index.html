@@ -5,36 +5,25 @@
     <style>
       body{
         background-color: lightpink;
-        color:black;
         transition:background-color 0.5s;
-        max-height: 100vh;
-        overflow: hidden;
+        max-width: 200px;
+        margin: auto;
       }
-      header h1{
-        color:white;
-        font-size: 5em;
+      img{
+        height:500px;
+        max-height: 500px;
         margin: 0 auto;
-        text-align: center;
-        min-width: 20%;
-        max-width: 80%;
-        min-height: 20%;
+        display: block;
       }
-      #container, img{
-        color:slategrey;
-        font-size: 10em;
-        margin: 0 auto;
-        min-width: 20%;
-        max-width: 50%;
-        min-height: 20%;
-        background: white;
-        text-align: center;
-      }
-      .pulse {
-        background-color: white;
+      div{
+        width:200px;
       }
     </style>
   </head>
-  <body class="ripple">
+  <body>
+    <div>
+      <img src="./public/bg.png" />
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./public/jquery-3.1.1.min.js"></script>
     <script src="./public/tone.js"></script>
@@ -69,8 +58,7 @@
             }));
           });
           socket.on('pulse',function(){
-            //console.log("pulse received!");
-            //$('body').toggleClass('rippleafter');
+            //console.log('pulse');
           });
           var notes = (function(){
             if( navigator.userAgent.match(/Android/i)
@@ -99,6 +87,13 @@
                 plucky.triggerAttackRelease(note, "@8n");
             }, notes.scramble(),"upDown");
             patternOne.start(0);
+            var drum = new Tone.MembraneSynth().toMaster();
+            var drumPattern = new Tone.Pattern(function(time, note){
+                drum.triggerAttackRelease(note, "@8n");
+            }, ["C3","C3","C3","C3","C3"],"upDown");
+            drumPattern.start(0);
+
+
     </script>
   </body>
 </html>
