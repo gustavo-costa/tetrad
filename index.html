@@ -15,7 +15,7 @@
       img{
         padding-top: 10vh;
         height:80vh;
-        min-width: 300px;
+        min-width: 400px;
         max-width: 400px;
         margin: 0 auto;
         display: block;
@@ -186,7 +186,6 @@
             }
           })();
           var plucky = new Tone.PolySynth().toMaster();
-
           var patternOne = new Tone.Pattern(function(time, note){
               plucky.triggerAttackRelease(note, "@8n");
           }, notes,"upDown");
