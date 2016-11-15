@@ -3,6 +3,7 @@
   <head>
     <title>Tetrad</title>
     <link id="favicon" rel="icon" type="image/png" href="./favicon-red.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
       body{
         background-color: lightpink;
@@ -57,8 +58,8 @@
       left: 50%;
       display: block;
       position: absolute;
-      max-width: 250px;
-      min-width: 250px;
+      /*max-width: 300px;*/
+      min-width: 300px;
     }
     h1 {
       color: #2b9f5e;
@@ -96,6 +97,10 @@
     .title:nth-child(3) {
       color: #f1c83c;
     }
+    span#together{
+      max-width: 100%;
+
+    }
     .button {
         float: left;
         font-size: 28px;
@@ -128,7 +133,7 @@
       <h1>
         <span class="title">Make</span><br>
         <span class="title">Music</span>
-        <span class="title">Together</span>
+        <span class="title" id="together">Together</span>
       </h1>
     <div class="button">begin</div>
     </section>
