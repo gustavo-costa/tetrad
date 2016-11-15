@@ -3,7 +3,6 @@
   <head>
     <title>Tetrad</title>
     <link id="favicon" rel="icon" type="image/png" href="./favicon-red.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
       body{
         background-color: lightpink;
@@ -16,7 +15,8 @@
       img{
         padding-top: 10vh;
         height:80vh;
-        max-width: 80vw;
+        min-width: 300px;
+        max-width: 400px;
         margin: 0 auto;
         display: block;
         opacity: 0;
@@ -50,28 +50,29 @@
       }
     body {
       font-family: 'viper', sans-serif;
+
     }
 
     .container {
       transform: translate(-50%, -50%);
-      top: 50%;
+      top: 40%;
       left: 50%;
       display: block;
       position: absolute;
-      /*max-width: 300px;*/
-      min-width: 300px;
+      max-width: 500px;
+
     }
     h1 {
       color: #2b9f5e;
       text-transform: uppercase;
-      font-size: 42px;
+      font-size: 84px;
       margin: 0;
-      line-height: 100px;
+      line-height: 165px;
       letter-spacing: 2px;
     }
 
     .title {
-      transform: translateX(-50%) rotate(0deg);
+      transform: translateX(-50%) rotate(0deg) scale(2);
       display: block;
       float: left;
       left: 50%;
@@ -97,13 +98,9 @@
     .title:nth-child(3) {
       color: #f1c83c;
     }
-    span#together{
-      max-width: 100%;
-
-    }
     .button {
         float: left;
-        font-size: 28px;
+        font-size: 84px;
         font-family: 'viper', sans-serif;
         position: relative;
         bottom: -65px;
@@ -122,6 +119,13 @@
         display: block;
         float: left;
       }
+      @media (max-width: 960px) {
+        h1 {
+          font-size: 42px;
+          transform: scale(1);
+          min-width: 400px;
+        }
+      }
 
     </style>
   </head>
@@ -132,8 +136,8 @@
     <section class="container">
       <h1>
         <span class="title">Make</span><br>
-        <span class="title">Music</span>
-        <span class="title" id="together">Together</span>
+        <span class="title">Music</span><br>
+        <span class="title">Together</span><br>
       </h1>
     <div class="button">begin</div>
     </section>
