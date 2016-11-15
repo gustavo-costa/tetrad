@@ -15,11 +15,12 @@
       img{
         padding-top: 10vh;
         height:80vh;
-        /*min-width: 400px;*/
+        min-width: 300px;
         max-width: 400px;
         margin: 0 auto;
         display: block;
         opacity: 0;
+
       }
       img.fade-in {
           opacity: 1;
@@ -58,8 +59,8 @@
       left: 50%;
       display: block;
       position: absolute;
-      /*max-width: 500px;*/
-      /*min-width: 500px;*/
+      max-width: 500px;
+      min-width: 500px;
 
     }
     h1 {
@@ -185,6 +186,7 @@
             }
           })();
           var plucky = new Tone.PolySynth().toMaster();
+
           var patternOne = new Tone.Pattern(function(time, note){
               plucky.triggerAttackRelease(note, "@8n");
           }, notes,"upDown");
