@@ -235,17 +235,15 @@
           || navigator.userAgent.match(/BlackBerry/i)
           || navigator.userAgent.match(/Windows Phone/i)
           ){
-             $(window).on("orientationchange",function(){
               if(window.orientation == 0) // Portrait
               {
+                $('.title').css('font-size','42px');
+                $('.title').css('line-height','95px');
+              } else{
                 $('.title').css('font-size','60px');
                 $('.title').css('line-height','160px');
-              } else{
-                  $('.title').css('font-size','42px');
-                  $('.title').css('line-height','95px');
               }
 
-            });
            }
     </script>
   </body>
