@@ -239,7 +239,11 @@
              $(window).on("orientationchange",function(){
               if(window.orientation != 0) // Portrait
               {
-                $('.title').css('transform','scale(0.3)');
+                $('.title').css('font-size','32px');
+                $('.title').css('line-height','80px');
+              } else{
+                  $('.title').css('font-size','42px');
+                  $('.title').css('line-height','165px');
               }
 
             });
