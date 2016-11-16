@@ -14,9 +14,9 @@
       }
       img{
         padding-top: 10vh;
-        height:600px;
-        min-width: 400px;
-        max-width: 400px;
+        height:80vh;
+        /*min-width: 400px;*/
+        /*max-width: 400px;*/
         margin: 0 auto;
         display: block;
         opacity: 0;
@@ -64,6 +64,7 @@
 
     }
     h1 {
+      padding-top: 10vh;
       color: #2b9f5e;
       text-transform: uppercase;
       font-size: 42px;
@@ -234,7 +235,14 @@
           || navigator.userAgent.match(/BlackBerry/i)
           || navigator.userAgent.match(/Windows Phone/i)
           ){
-             $('.title').css('font-size','2em');
+             $('.title').css('line-height','42px');
+             $(window).on("orientationchange",function(){
+              if(window.orientation != 0) // Portrait
+              {
+                $('.title').css('transform','scale(0.3)');
+              }
+
+            });
            }
     </script>
   </body>
