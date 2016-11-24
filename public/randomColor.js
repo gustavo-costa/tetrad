@@ -417,12 +417,12 @@
   }
 
   function stringToInteger (string) {
-    var total = 0
+    var total = 0;
     for (var i = 0; i !== string.length; i++) {
       if (total >= Number.MAX_SAFE_INTEGER) break;
-      total += string.charCodeAt(i)
+      total += string.charCodeAt(i);
     }
-    return total
+    return total;
   }
 
   return randomColor;

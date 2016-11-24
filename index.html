@@ -43,8 +43,7 @@
       @import url(https://fonts.googleapis.com/css?family=Fjalla+One);
       @font-face {
         font-family: 'viper';
-        src: url('./public/viper.ttf') format('woff'),
-          url('./public/viper.woff') format('truetype'),
+        src:
           url('./.fonts/viper.ttf') format('woff'),
           url('./.fonts/viper.woff') format('truetype');
       }
@@ -139,7 +138,6 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="./public/jquery-3.1.1.min.js"></script>
     <script src="./public/tone.js"></script>
-    <script src="./public/subcollidor.js"></script>
     <script src="./public/randomColor.js"></script>
     <script src="./public/tween1-18.js"></script>
     <script src="./public/lettering.js"></script>
@@ -164,6 +162,16 @@
           socket.on('pulse',function(){
             //console.log('pulse');
           });
+          function scramble(array) {
+              var j, x, i;
+              for (i = array.length; i; i--) {
+                  j = Math.floor(Math.random() * i);
+                  x = array[i - 1];
+                  array[i - 1] = array[j];
+                  array[j] = x;
+              }
+              return array;
+          }
           var notes = (function(){
             if( navigator.userAgent.match(/Android/i)
             || navigator.userAgent.match(/webOS/i)
@@ -180,19 +188,39 @@
              }
 
             if(i===1){
-              return ["C4","E4","G4","A4","F4"].scramble();
+              //return ["C4","E4","G4","A4","F4"].scramble();
+              return scramble(["C4","E4","G4","A4","F4"]);
             } else if(i===2){
-              return ["E4","F4","E4","F3","C4"].scramble();
+              //return ["E4","F4","E4","F3","C4"].scramble();
+              return scramble(["E4","F4","E4","F3","C4"]);
             } else if(i===3){
-              return ["C3","E3","G3","A3","F3"].scramble();
+              //return ["C3","E3","G3","A3","F3"].scramble();
+              return scramble(["C3","E3","G3","A3","F3"]);
             }
           })();
           var plucky = new Tone.PolySynth().toMaster();
-
           var patternOne = new Tone.Pattern(function(time, note){
               plucky.triggerAttackRelease(note, "@8n");
           }, notes,"upDown");
           patternOne.start(0);
+
+          var tap = new Tone.PolySynth().toMaster();
+          var n = 0;
+          var pluckNotes = scramble(["C5","E5","G5","A5","F5"]);
+            $(window).on("tap",function(){
+              if(Tone.Transport.state != "stopped"){
+                n++
+                tap.triggerAttackRelease(pluckNotes[n],"@16n");
+                if(n === 4){n = 0;}
+              }
+            });
+            $(window).on("click",function(){
+              if(Tone.Transport.state != "stopped"){
+                n++
+                tap.triggerAttackRelease(pluckNotes[n],"@16n");
+                if(n === 4){n = 0;}
+              }
+            });
 
           $(document).ready(function() {
             animation();
@@ -243,7 +271,6 @@
                 $('.title').css('font-size','60px');
                 $('.title').css('line-height','160px');
               }
-
            }
     </script>
   </body>
