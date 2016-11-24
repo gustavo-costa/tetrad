@@ -207,13 +207,22 @@
           var tap = new Tone.PolySynth().toMaster();
           var n = 0;
           var pluckNotes = scramble(["C5","E5","G5","A5","F5"]);
-            $(window).on("tap",function(){
+          if( navigator.userAgent.match(/Android/i)
+          || navigator.userAgent.match(/webOS/i)
+          || navigator.userAgent.match(/iPhone/i)
+          || navigator.userAgent.match(/iPad/i)
+          || navigator.userAgent.match(/iPod/i)
+          || navigator.userAgent.match(/BlackBerry/i)
+          || navigator.userAgent.match(/Windows Phone/i)
+          ){
+            $(window).on("touchstart",function(){
               if(Tone.Transport.state != "stopped"){
                 n++
                 tap.triggerAttackRelease(pluckNotes[n],"@16n","16n");
                 if(n === 4){n = 0;}
               }
             });
+          } else {
             $(window).on("click",function(){
               if(Tone.Transport.state != "stopped"){
                 n++
@@ -221,6 +230,7 @@
                 if(n === 4){n = 0;}
               }
             });
+          }
 
           $(document).ready(function() {
             animation();
