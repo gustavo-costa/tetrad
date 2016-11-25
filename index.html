@@ -127,7 +127,6 @@
         display: block;
         float: left;
       }
-
     </style>
   </head>
   <body>
@@ -225,7 +224,7 @@
             $(window).on("touchstart",function(){
               if(Tone.Transport.state != "stopped"){
                 n++
-                tap.triggerAttackRelease(pluckNotes[n],"@8n","16n");
+                tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
                 if(n === 4){n = 0;}
               }
             });
@@ -233,7 +232,7 @@
             $(window).on("click",function(){
               if(Tone.Transport.state != "stopped"){
                 n++
-                tap.triggerAttackRelease(pluckNotes[n],"@8n","16n");
+                tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
                 if(n === 4){n = 0;}
               }
             });
