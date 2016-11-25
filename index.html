@@ -204,9 +204,9 @@
               return scramble(["C3","E3","G3","A3","F3"]);
             }
           })();
-          var plucky = new Tone.PolySynth().toMaster();
+          var plucky = new Tone.PluckSynth().toMaster();
           var patternOne = new Tone.Pattern(function(time, note){
-              plucky.triggerAttackRelease(note, "@8n");
+              plucky.triggerAttackRelease(note, "@16n");
           }, notes,"upDown");
           patternOne.start(0);
 
