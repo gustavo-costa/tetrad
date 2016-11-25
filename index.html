@@ -198,7 +198,7 @@
               return scramble(["C4","E4","G4","A4","G5"]);
             } else if(i===2){
               //return ["E4","F4","E4","F3","C4"].scramble();
-              return scramble(["E4","F4","E4","D4","C4"]);
+              return scramble(["C4","F4","E4","D4","C5"]);
             } else if(i===3){
               //return ["C3","E3","G3","A3","F3"].scramble();
               return scramble(["C3","E3","G3","A3","C4"]);
@@ -217,12 +217,20 @@
 
 
           var patternOne = new Tone.Pattern(function(time, note){
+            if( navigator.userAgent.match(/Android/i)
+            || navigator.userAgent.match(/webOS/i)
+            || navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/iPad/i)
+            || navigator.userAgent.match(/iPod/i)
+            || navigator.userAgent.match(/BlackBerry/i)
+            || navigator.userAgent.match(/Windows Phone/i)
+            ){
+              plucky.triggerAttackRelease(note, "@16n");
+            } else {
               plucky.triggerAttackRelease(note, "@16n");
               tom.triggerAttackRelease("A2","1n","@1m",1);
-              snare.triggerAttackRelease("A4","2n","@2m",1);
-              Tone.Transport.schedule(function(time){
-
-              }, "2:0:0");
+              snare.triggerAttackRelease("A4","1n","@2m",1);
+            }
           }, notes,"upDown");
           // plucky.set({
           //     "envelope" : {
