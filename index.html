@@ -1,7 +1,7 @@
 <!doctype html>
-<html>
+<html oncontextmenu="return false;">
   <head>
-    <meta name="viewport" content="user-scalable=0,width=device-width,initial-scale = 1, maximum-scale=1"/>
+    <meta name="viewport" content="minimal-ui,user-scalable=0,width=device-width,initial-scale = 1, maximum-scale=1"/>
     <title>Tetrad</title>
     <link id="favicon" rel="icon" type="image/png" href="./favicon-red.png" />
     <style>
@@ -61,32 +61,42 @@
     }
 
     .container {
-      transform: translateY(-50%);
-      top: 40%;
-      left: 50%;
+      transform: translateY(-50%) translateX(-5%);
+      /*top: 25%;*/
+      top:30%;
+      left: 30%;
       display: block;
       position: absolute;
       max-width: 500px;
       min-width: 500px;
-
+      margin: auto;
+      width: 50%;
+      padding: 10px;
+      text-align: center;
     }
     h1 {
-      padding-top: 10vh;
+      /*padding-top: 10vh;*/
       color: #2b9f5e;
-      text-transform: uppercase;
+      /*text-transform: uppercase;*/
       font-size: 42px;
-      margin: 0;
+      /*margin: 0;*/
       line-height: 95px;
-      letter-spacing: 2px;
+      /*letter-spacing: 2px;*/
+      margin: auto;
+      width: 50%;
+      /*padding: 10px;*/
+      text-align: center;
+      padding: 70px 0;
     }
 
     .title {
-      transform: translateX(-20%) rotate(10deg) scale(1);
+      transform:rotate(10deg) scale(1);
       display: block;
       float: left;
-      left: 50%;
+      left: -55%;
       position: relative;
       opacity:0;
+
     }
     .title span {
       transform: skew(-10deg);
@@ -109,18 +119,18 @@
     }
     .button {
         float: left;
-        font-size: 42px;
+        font-size: 32px;
         font-family: 'viper', sans-serif;
-        position: relative;
-        bottom: -65px;
-        left: 50%;
-        transform: translateX(-50%) rotate(10deg);
+        position: absolute;
+        bottom: -10%;
+        left: 0%;
+        transform: rotate(10deg);
         color: #f1c83c;
         text-transform: uppercase;
         text-align: center;
         opacity: 0;
         visibility: hidden;
-        cursor: pointer;
+        cursor: default;
         text-shadow: #533d4a 1px 1px, #533d4a 2px 2px, #533d4a 3px 3px, #533d4a 4px 4px;
       }
       .button span {
@@ -128,6 +138,19 @@
         display: block;
         float: left;
       }
+
+      @media screen and (orientation:landscape) and (max-width: 640px) {
+        .container {
+          -ms-transform: scale(0.5); /* IE 9 */
+          -webkit-transform: scale(0.5); /* Chrome, Safari, Opera */
+          transform: scale(0.7);
+          top:-25%;
+        }
+        h1{
+          line-height: 50px;
+        }
+      }
+
     </style>
   </head>
   <body>
@@ -247,14 +270,17 @@
           patternOne.start(0);
 
 
-        var tap = new Tone.MonoSynth({"volume" : -30}).toMaster();
+        var tap = new Tone.MonoSynth({"volume" : -27}).toMaster();
           var n = 0;
           var pluckNotes = scramble(["C4","E4","G4","A4","D4"]);
           var reverb = new Tone.JCReverb(0.4).connect(Tone.Master);
-          var delay = new Tone.PingPongDelay(0.5);
-          //var vol = new Tone.Volume(-1000);
-          //connecting the synth to reverb through delay
+          var delay = new Tone.PingPongDelay(1);
           tap.chain(delay, reverb);
+
+
+
+
+
           if( navigator.userAgent.match(/Android/i)
           || navigator.userAgent.match(/webOS/i)
           || navigator.userAgent.match(/iPhone/i)
@@ -263,29 +289,47 @@
           || navigator.userAgent.match(/BlackBerry/i)
           || navigator.userAgent.match(/Windows Phone/i)
           ){
-            $(window).on("touchstart",function(){
+            //var yPos = e.originalEvent.touches[0].pageY;
+            scramble(pluckNotes);
+            $(window).on("touchstart",function(e){
               if(Tone.Transport.state != "stopped"){
-                n++
-                tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
-                if(n === 4){n = 0;}
-              }
+                    tap.triggerAttack(pluckNotes[n]);
+                  }
+              });
+
+            $(window).on("touchmove",function(e){
+
             });
-          } else {
-            $(window).on("click",function(){
-              if(Tone.Transport.state != "stopped"){
-                n++
-                tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
-                if(n === 4){n = 0;}
-              }
-            });
-          }
+
+            $(window).on("touchend",function(){
+                if(Tone.Transport.state != "stopped"){
+                  tap.triggerRelease();
+                }
+              });
+            }
+          //   $(window).on("touchstart",function(){
+          //     if(Tone.Transport.state != "stopped"){
+          //       n++
+          //       tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
+          //       if(n === 4){n = 0;}
+          //     }
+          //   });
+          // } else {
+          //   $(window).on("click",function(){
+          //     if(Tone.Transport.state != "stopped"){
+          //       n++
+          //       tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
+          //       if(n === 4){n = 0;}
+          //     }
+          //   });
+          //}
 
           $(document).ready(function() {
             animation();
           }, 1000);
 
           $('.button').click(function() {
-            $('.button').text("Waiting for my moment...");
+            $('.button').html("<h4>Waiting for<br> my moment...</h4>");
             socket.on('sync', function(currentBeat){
               $('#favicon').attr("href","./favicon-green.png");
               $("img").addClass("fade-in");
@@ -315,25 +359,37 @@
             {ease: Back.easeOut.config(3), opacity: 1, bottom: 0}, 0.05);
             title1.to(".button", 1, {visibility: 'visible' ,opacity: 1})
           }
-          if( navigator.userAgent.match(/Android/i)
+          var orientation = screen.orientation || screen.mozOrientation || screen.msOrientation;
+
+
+          if( !(navigator.userAgent.match(/Android/i)
           || navigator.userAgent.match(/webOS/i)
           || navigator.userAgent.match(/iPhone/i)
           || navigator.userAgent.match(/iPad/i)
           || navigator.userAgent.match(/iPod/i)
           || navigator.userAgent.match(/BlackBerry/i)
-          || navigator.userAgent.match(/Windows Phone/i)
+          || navigator.userAgent.match(/Windows Phone/i))
           ){
-              if(window.orientation != 0) // Portrait
-              {
-                // $('.title').css('font-size','42px');
-                // $('.title').css('line-height','95px');
-                //$('.title').css('transform','scale(0.8) rotate(10deg) translateX(-30%)');
-                //$('.button').css('transform','scale(0.8) rotate(10deg)');
-              } else {
-                //$('.title').css('transform','scale(0.8) rotate(10deg)  translateX(-30%)');
+            $('.container').css('left','50%');
+            $('.container').css('top','5%');
+            $('.container').css('transform','scale(2)');
+            console.log('Hello Desktop User!');
+          } else{
+            $('.container').css('left','30%');
+            // if(orientation.type === "landscape-primary" || orientation.type === "landscape-secondary"){
+            //   $('h1').css('font-size','30px');
+            //   $('h1').css('line-height','10px');
+            //   $('h1').css('transform','scale(0.8) rotate(0deg)');
+            //   //$('.title').css('transform','scale(0.8) rotate(10deg) translateX(-30%)');
+            //   //$('.button').css('transform','scale(0.8) rotate(10deg)');
+            // } else {
+            //   $('h1').css('font-size','42px');
+            //   $('h1').css('line-height','95px');
+            //
+            //
+            // }
 
-              }
-           }
+          }
     </script>
   </body>
 </html>
