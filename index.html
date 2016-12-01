@@ -122,7 +122,8 @@
         font-size: 32px;
         font-family: 'viper', sans-serif;
         position: absolute;
-        bottom: -10%;
+        /*bottom: 90%;*/
+        bottom:-1%;
         left: 0%;
         transform: rotate(10deg);
         color: #f1c83c;
@@ -174,8 +175,7 @@
 
     <script>
         var socket = io();
-        var isPlaying = false;
-        var i;
+
         $(document).ready(function() {
           console.log("ready");
             socket.emit('connection');
@@ -270,15 +270,31 @@
           patternOne.start(0);
 
 
-        var tap = new Tone.MonoSynth({"volume" : -27}).toMaster();
+        var tap = new Tone.MonoSynth({"volume" : -33}).toMaster();
           var n = 0;
           var pluckNotes = scramble(["C4","E4","G4","A4","D4"]);
           var reverb = new Tone.JCReverb(0.4).connect(Tone.Master);
           var delay = new Tone.PingPongDelay(1);
-          tap.chain(delay, reverb);
+
+
+          		//Tremolo - an amplitude modulation effect
+          		var tremolo = new Tone.Tremolo({
+          			"frequency" : 0.6,
+          			"depth" : 0.7
+          		}).toMaster().start();
+              tap.chain(reverb,tremolo);
 
 
 
+          scramble(pluckNotes);
+          $(window).on("mousedown",function(e){
+            if(Tone.Transport.state != "stopped"){
+                  tap.triggerAttack(pluckNotes[n]);
+                }
+            });
+            $(window).on("mouseup",function(e){
+              tap.triggerRelease();
+            });
 
 
           if( navigator.userAgent.match(/Android/i)
