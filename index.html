@@ -282,7 +282,7 @@
           			"frequency" : 0.6,
           			"depth" : 0.7
           		}).toMaster().start();
-              tap.chain(reverb,tremolo);
+              tap.chain(tremolo);
 
 
 
@@ -322,23 +322,23 @@
                   tap.triggerRelease();
                 }
               });
-            }
-          //   $(window).on("touchstart",function(){
-          //     if(Tone.Transport.state != "stopped"){
-          //       n++
-          //       tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
-          //       if(n === 4){n = 0;}
-          //     }
-          //   });
-          // } else {
-          //   $(window).on("click",function(){
-          //     if(Tone.Transport.state != "stopped"){
-          //       n++
-          //       tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
-          //       if(n === 4){n = 0;}
-          //     }
-          //   });
-          //}
+            
+            $(window).on("touchstart",function(){
+              if(Tone.Transport.state != "stopped"){
+                n++
+                tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
+                if(n === 4){n = 0;}
+              }
+            });
+          } else {
+            $(window).on("click",function(){
+              if(Tone.Transport.state != "stopped"){
+                n++
+                tap.triggerAttackRelease(pluckNotes[n],"@8n","8n");
+                if(n === 4){n = 0;}
+              }
+            });
+          }
 
           $(document).ready(function() {
             animation();
