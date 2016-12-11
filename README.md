@@ -19,11 +19,11 @@
 <pre><code> $ npm install socket.io --save
 </code></pre>
 
-<p>You can check your current version of any of these frameworks by using the following:</p>
+<p>You can check the currently installed version of any of these frameworks by using the following:</p>
 
 <pre><code> $ node -v
 </code></pre>
-<p>will display all currently installed packages and their versions</p>
+<p>Type the following to display all currently installed packages and their versions</p>
 <pre><code> $ npm list
 </code></pre>
 
